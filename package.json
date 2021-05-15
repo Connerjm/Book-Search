@@ -1,7 +1,7 @@
 {
     "name": "book-search",
     "version": "1.0.0",
-    "description": "A MERN stack book search application.",
+    "description": "A MERN stack book searching application.",
     "main": "server.js",
     "scripts": {
         "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
