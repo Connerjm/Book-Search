@@ -2,7 +2,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const routes = require("./routes");
+const router = express.Router();
+const bookController = require("./controllers/bookController");
 
 // Variables
 const PORT = process.env.PORT || 3001;
@@ -19,17 +20,25 @@ if (process.env.NODE_ENV === "production")
 }
 
 // API routes
-app.use(routes);
+router
+    .route("/")
+    .get(bookController.get)
+    .post(bookController.post);
 
-// Send every request to the React app
-// Define any API routes before this runs
+router
+    .route("/:id")
+    .delete(bookController.delete);
+
+app.use(router);
+
+// Send every other request to the React app
 app.get("*", function(req, res)
 {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/XXXX");
+//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks");
 
 // Start server
 app.listen(PORT, function()
